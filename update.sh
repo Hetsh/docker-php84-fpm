@@ -2,7 +2,7 @@
 
 
 # Abort on any error
-set -e -u
+set -e -u -o pipefail
 
 # Simpler git usage, relative file paths
 CWD=$(dirname "$0")
@@ -16,24 +16,19 @@ source libs/docker.sh
 assert_dependency "jq"
 assert_dependency "curl"
 
-# Alpine Linux
-update_image "amd64/alpine" "Alpine Linux" "false" "\d{8}"
-
-# Packages
-PKG_URL="https://pkgs.alpinelinux.org/package/edge/community/x86_64"
-update_pkg "php84" "PHP8.4" "false" "$PKG_URL" "(\d+\.)+\d+-r\d+"
-update_pkg "php84-fpm" "PHP8.4 FPM" "true" "$PKG_URL" "(\d+\.)+\d+-r\d+"
-
+# Updates
+update_image "amd64/alpine" "\d{8}" "Alpine Linux"
+update_packages_apk "hetsh/php84-fpm"
 if ! updates_available; then
-	#echo "No updates available."
+	echo "No updates available."
 	exit 0
 fi
 
 # Perform modifications
-if [ "${1-}" = "--noconfirm" ] || confirm_action "Save changes?"; then
+if test "${1-}" == "--noconfirm" || confirm_action "Save changes?"; then
 	save_changes
 
-	if [ "${1-}" = "--noconfirm" ] || confirm_action "Commit changes?"; then
-		commit_changes
+	if test "${1-}" == "--noconfirm" || confirm_action "Commit changes?"; then
+		commit_changes "php84-fpm"
 	fi
 fi
