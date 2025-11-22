@@ -1,9 +1,9 @@
 FROM amd64/alpine:20250108
-ARG LAST_UPGRADE="2025-11-15T12:38:03+01:00"
+ARG LAST_UPGRADE="2025-11-22T11:53:34+01:00"
 RUN apk upgrade && \
     apk add --no-cache \
-        php84=8.4.14-r0 \
-        php84-fpm=8.4.14-r0
+        php84=8.4.15-r0 \
+        php84-fpm=8.4.15-r0
 
 # App user
 ARG APP_USER="http"
