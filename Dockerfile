@@ -1,5 +1,5 @@
 FROM amd64/alpine:20251224
-ARG LAST_UPGRADE="2026-01-18T12:47:38+01:00"
+ARG LAST_UPGRADE="2026-01-24T12:21:56+01:00"
 RUN apk upgrade && \
     apk add --no-cache \
         php84=8.4.17-r0 \
