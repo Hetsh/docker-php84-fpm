@@ -1,5 +1,5 @@
-FROM amd64/alpine:20251224
-ARG LAST_UPGRADE="2026-01-24T12:21:56+01:00"
+FROM amd64/alpine:20260127
+ARG LAST_UPGRADE="2026-01-29T09:17:33+01:00"
 RUN apk upgrade && \
     apk add --no-cache \
         php84=8.4.17-r0 \
@@ -68,15 +68,11 @@ RUN sed -i "s|^include_path|;include_path|" "$INI_CONF" && \
     sed -i "s|^;catch_workers_output.*|catch_workers_output = yes|" "$WWW_CONF" && \
     sed -i "s|^;decorate_workers_output.*|decorate_workers_output = no|" "$WWW_CONF"
 
-# Volumes
+# Folders
 ARG SRV_DIR="/srv"
 RUN mkdir "$SOCK_DIR" && \
     chmod 750 "$SOCK_DIR" && \
     chown -R "$APP_USER":"$APP_GROUP" "$SRV_DIR" "$SOCK_DIR" "$LOG_DIR"
-VOLUME ["$SRV_DIR", "$SOCK_DIR" , "$LOG_DIR"]
-
-#      PHP-FPM
-EXPOSE 9000/tcp
 
 WORKDIR "$SRV_DIR"
 ENTRYPOINT ["php-fpm"]
