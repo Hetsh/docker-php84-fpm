@@ -1,6 +1,6 @@
-FROM amd64/alpine:20260127
+FROM hetsh/alpine:20260127-1
 ARG LAST_UPGRADE="2026-01-29T13:31:57+01:00"
-RUN apk upgrade && \
+RUN apk upgrade --no-cache && \
     apk add --no-cache \
         php84=8.4.17-r0 \
         php84-fpm=8.4.17-r0
