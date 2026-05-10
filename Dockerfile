@@ -1,9 +1,9 @@
 FROM hetsh/alpine:20260127-7
-ARG LAST_UPGRADE="2026-05-03T07:16:11+02:00"
+ARG LAST_UPGRADE="2026-05-10T12:48:11+02:00"
 RUN apk upgrade --no-cache && \
     apk add --no-cache \
-        php84=8.4.20-r0 \
-        php84-fpm=8.4.20-r0
+        php84=8.4.21-r2 \
+        php84-fpm=8.4.21-r2
 
 # App user
 ARG APP_USER="http"
